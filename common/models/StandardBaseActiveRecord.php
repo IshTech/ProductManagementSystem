@@ -54,6 +54,17 @@ class StandardBaseActiveRecord extends BaseActiveRecord {
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels() {
+		return ArrayHelper::merge(parent::attributeLabels(), [
+			'id'          => Yii::t('app', 'ID'         ),
+			'description' => Yii::t('app', 'Description'),
+			'is_active'   => Yii::t('app', 'Active'     ),
+		]);
+	}
+
+	/**
 	 * if record is active or not
 	 * @return boolean
 	 */
