@@ -41,6 +41,7 @@ class ProductSubCategory extends BaseProductSubCategory {
 	public function attributeLabels() {
 		return ArrayHelper::merge(parent::attributeLabels(), [
 			'productCategory.name' => Yii::t('app', 'Category Name'),
+			'productCategory.label' => Yii::t('app', 'Category'),
 		]);
 	}
 
