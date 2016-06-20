@@ -5,9 +5,9 @@ namespace frontend\controllers;
 use Yii;
 use yii\helpers\Json;
 use kartik\detail\DetailView;
-use ish\core\controllers\BaseController;
-use app\models\Product;
-use app\models\search\ProductSearch;
+use ishtech\core\controllers\BaseController;
+use common\models\Product;
+use common\models\search\ProductSearch;
 
 /**
  *

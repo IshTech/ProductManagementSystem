@@ -47,7 +47,7 @@ class Product extends BaseProduct {
 	 * @return \yii\db\ActiveQuery
 	 */
 	public function getProductSubCategory() {
-		return $this->hasOne(SubProductCategory::className(), ['id' => 'product_sub_category_id']);
+		return $this->hasOne(ProductSubCategory::className(), ['id' => 'product_sub_category_id']);
 	}
 
 }

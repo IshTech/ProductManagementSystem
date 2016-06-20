@@ -4,7 +4,7 @@ namespace common\models\base;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use ishtech\core\models\MasterBaseRecord;
+use ishtech\core\models\MasterBaseActiveRecord;
 
 /**
  * This is the model class for table "{{%product_master}}".
@@ -22,7 +22,7 @@ use ishtech\core\models\MasterBaseRecord;
  * @property date $updated_at
  *
  */
-abstract class BaseProduct extends MasterBaseRecord {
+abstract class BaseProduct extends MasterBaseActiveRecord {
 
 	/**
 	 * @inheritdoc

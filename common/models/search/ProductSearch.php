@@ -3,6 +3,7 @@
 namespace common\models\search;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use common\models\Product;
 
