@@ -28,6 +28,23 @@ class ProductSearch extends Product {
 
 	/**
 	 * @inheritdoc
+	 * add related fields to searchable attributes
+	 */
+	public function attributes() {
+		return ArrayHelper::merge(parent::attributes(), [
+			'productCategory.id',
+			'productCategory.name',
+			'productCategory.label',
+			'productCategory.description',
+			'productSubCategory.id',
+			'productSubCategory.name',
+			'productSubCategory.label',
+			'productSubCategory.description',
+		]);
+	}
+
+	/**
+	 * @inheritdoc
 	 */
 	public function rules() {
 		return [
@@ -38,8 +55,10 @@ class ProductSearch extends Product {
 			[['is_active'], 'integer', 'min'=> '0', 'max' => '1', ],
 			[['productCategory.id'], 'integer'],
 			[['productSubCategory.id'], 'integer'],
-			[['productCategory.name'], 'string'],
-			[['productSubCategory.name'], 'string'],
+			[['productCategory.name', 'productCategory.label'], 'string'],
+			[['productSubCategory.name', 'productSubCategory.label'], 'string'],
+			[['productCategory.description'], 'string'],
+			[['productSubCategory.description'], 'string'],
 		];
 	}
 
@@ -48,6 +67,9 @@ class ProductSearch extends Product {
 	 */
 	public function attributeLabels() {
 		return ArrayHelper::merge(parent::attributeLabels(), [
+			'productCategory.label' => Yii::t('app', 'Category'),
+			'productSubCategory.label' => Yii::t('app', 'Sub-Category'),
+			'label' => Yii::t('app', 'Product'),
 		]);
 	}
 
