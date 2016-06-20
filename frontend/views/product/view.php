@@ -4,6 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\detail\DetailView;
+use common\models\ProductCategory;
 use common\models\ProductSubCategory;
 
 $this->title = Yii::t('app', 'Product');
@@ -75,21 +76,15 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 				'attribute'     => 'label',
-				'label'         => $model->getAttributeLabel('product.label'),
+				'label'         => $model->getAttributeLabel('product.label'), // TODO: change label name to Label when in edit mode
 			],
 			[
-	//			'attribute'     => 'productCategory.label',
-				'label'         => $model->getAttributeLabel('productCategory.label'),
+				'attribute'     => 'product_category_id',
+				'label'         => $model->getAttributeLabel('productSubCategory.productCategory.label'),
 				'value'         => (null != $model->productSubCategory && null != $model->productSubCategory->productCategory) ? $model->productSubCategory->productCategory->label : null,
-			],
-			[
-				'attribute'     => 'product_sub_category_id',
-				'label'         => $model->getAttributeLabel('productSubCategory.label'),
-				'value'         => (null != $model->productSubCategory) ? $model->productSubCategory->label : null,
-	//			'updateAttr'    => 'product_sub_category_id',
 				'type'          => DetailView::INPUT_SELECT2, 
                 'widgetOptions' => [
-                    'data'    => ArrayHelper::map(ProductSubCategory::find()->orderBy('label')->asArray()->all(), 'id', 'label'),
+                    'data'    => ArrayHelper::map(ProductCategory::find()->orderBy('label')->asArray()->all(), 'id', 'label'),
                     'options' => [
 						'placeholder' => 'Select ...',
 					],
@@ -100,8 +95,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
 			],
 			[
-				'attribute'     => 'description'          ,
-				'format'        => 'ntext'                ,
+				'attribute'     => 'product_sub_category_id',
+				'label'         => $model->getAttributeLabel('productSubCategory.label'),
+				'value'         => (null != $model->productSubCategory) ? $model->productSubCategory->label : null,
+				'type'          => DetailView::INPUT_SELECT2, 
+                'widgetOptions' => [
+                    'data'    => ArrayHelper::map(ProductSubCategory::find()->orderBy('label')->asArray()->all(), 'id', 'label'),
+                    'options' => [
+						'placeholder' => 'Select ...',
+					],
+                    'pluginOptions' => [
+						'allowClear' => true  ,
+						'width'      => '100%',
+					],
+                ],
+			],
+			[
+				'attribute'     => 'description'             ,
+				'format'        => 'ntext'                   ,
 				'type'          => DetailView::INPUT_TEXTAREA,
 			],
 		],

@@ -54,5 +54,9 @@ class Product extends BaseProduct {
 		return $this->hasOne(ProductSubCategory::className(), ['id' => 'product_sub_category_id']);
 	}
 
+	public function getProduct_category_id() {
+		return (null != $this->productSubCategory) ? $this->productSubCategory->product_category_id : null;
+	}
+
 }
 ?>
