@@ -27,5 +27,14 @@ namespace ishtech\core\behaviors;
 
 class BlameableBehavior extends \yii\behaviors\BlameableBehavior {
 
+	/**
+	 * @inheritdoc
+	 *
+	 * Temp solution.
+	 */
+	protected function getValue($event) {
+		return 0;
+	}
+
 }
 ?>
