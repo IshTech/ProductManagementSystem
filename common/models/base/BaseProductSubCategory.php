@@ -36,6 +36,8 @@ abstract class BaseProductSubCategory extends MasterBaseActiveRecord {
 	 */
 	public function rules() {
 		return ArrayHelper::merge(parent::rules(), [
+			[['product_category_id'], 'integer'],
+			[['product_category_id'], 'required'],
 		]);
 	}
 

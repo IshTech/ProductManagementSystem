@@ -59,5 +59,9 @@ class ProductSubCategory extends BaseProductSubCategory {
 		return $this->hasMany(Product::className(), ['product_sub_category_id' => 'id']);
 	}
 
+	public static function findByProductCategoryId($product_catgegory_id) {
+		return self::findByCondition(['product_catgegory_id' => $product_catgegory_id])->all();
+	}
+
 }
 ?>
