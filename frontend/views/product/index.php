@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 	//		'id',
 			[
-				'attribute' => 'productCategory.label',
+				'attribute' => 'productSubCategory.productCategory.label',
 			],
 			[
 				'attribute' => 'productSubCategory.label',
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'attribute' => 'label',
 			],
-			'description:ntext',
+	//		'description:ntext',
 		],
 	]); ?>
 

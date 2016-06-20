@@ -39,7 +39,11 @@ class Product extends BaseProduct {
 	 */
 	public function attributeLabels() {
 		return ArrayHelper::merge(parent::attributeLabels(), [
-			'subProductCategory.name' => Yii::t('app', 'Sub-Category Name'),
+			'product.label' => Yii::t('app', 'Product'),
+			'productSubCategory.name' => Yii::t('app', 'Sub-Category Name'),
+			'productSubCategory.label' => Yii::t('app', 'Sub-Category'),
+			'productSubCategory.productCategory.name' => Yii::t('app', 'Category Name'),
+			'productSubCategory.productCategory.label' => Yii::t('app', 'Category'),
 		]);
 	}
 

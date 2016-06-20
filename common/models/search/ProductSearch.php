@@ -10,18 +10,7 @@ use common\models\Product;
 /**
  * This is the model class for table "{{%product_master}}".
  *
- * @property integer $id
- * @property integer $product_sub_category_id
- * @property string $name
- * @property string $label
- * @property string $language
- * @property string $description
- * @property boolean $is_active
- * @property integer $created_by
- * @property integer $updated_by
- * @property date $created_at
- * @property date $updated_at
- * @property ProductSubCategory $productSubCategory
+ * @inheritdoc
  *
  */
 class ProductSearch extends Product {
@@ -32,14 +21,14 @@ class ProductSearch extends Product {
 	 */
 	public function attributes() {
 		return ArrayHelper::merge(parent::attributes(), [
-			'productCategory.id',
-			'productCategory.name',
-			'productCategory.label',
-			'productCategory.description',
 			'productSubCategory.id',
 			'productSubCategory.name',
 			'productSubCategory.label',
 			'productSubCategory.description',
+			'productSubCategory.productCategory.id',
+			'productSubCategory.productCategory.name',
+			'productSubCategory.productCategory.label',
+			'productSubCategory.productCategory.description',
 		]);
 	}
 
@@ -53,12 +42,12 @@ class ProductSearch extends Product {
 			[['lang'], 'string', 'max' => '2'],
 			[['description'], 'string'],
 			[['is_active'], 'integer', 'min'=> '0', 'max' => '1', ],
-			[['productCategory.id'], 'integer'],
 			[['productSubCategory.id'], 'integer'],
-			[['productCategory.name', 'productCategory.label'], 'string'],
-			[['productSubCategory.name', 'productSubCategory.label'], 'string'],
-			[['productCategory.description'], 'string'],
 			[['productSubCategory.description'], 'string'],
+			[['productSubCategory.name', 'productSubCategory.label'], 'string'],
+			[['productSubCategory.productCategory.id'], 'integer'],
+			[['productSubCategory.productCategory.name', 'productSubCategory.productCategory.label'], 'string'],
+			[['productSubCategory.productCategory.description'], 'string'],
 		];
 	}
 
@@ -67,8 +56,6 @@ class ProductSearch extends Product {
 	 */
 	public function attributeLabels() {
 		return ArrayHelper::merge(parent::attributeLabels(), [
-			'productCategory.label' => Yii::t('app', 'Category'),
-			'productSubCategory.label' => Yii::t('app', 'Sub-Category'),
 			'label' => Yii::t('app', 'Product'),
 		]);
 	}
@@ -97,14 +84,26 @@ class ProductSearch extends Product {
 					'productSubCategory.id'    ,
 					'productSubCategory.name'  ,
 					'productSubCategory.label' ,
-					'productCategory.id'       ,
-					'productCategory.name'     ,
-					'productCategory.label'    ,
+					'productSubCategory.productCategory.id' => [
+						'asc'     => ['productCategory.id' => SORT_ASC ],
+						'desc'    => ['productCategory.id' => SORT_DESC],
+						'default' => 'asc' ,
+					],
+					'productSubCategory.productCategory.name' => [
+						'asc'     => ['productCategory.name' => SORT_ASC ],
+						'desc'    => ['productCategory.name' => SORT_DESC],
+						'default' => 'asc' ,
+					],
+					'productSubCategory.productCategory.label' => [
+						'asc'     => ['productCategory.label' => SORT_ASC ],
+						'desc'    => ['productCategory.label' => SORT_DESC],
+						'default' => 'asc' ,
+					],
 				],
 				'defaultOrder' => [
-					'productCategory.label'    => SORT_ASC  ,
-					'productSubCategory.label' => SORT_ASC  ,
-					'label'                    => SORT_ASC  ,
+					'productSubCategory.productCategory.label' => 'default'  ,
+					'productSubCategory.label'                 => SORT_ASC  ,
+					'label'                                    => SORT_ASC  ,
 				],
 			],
 		]);
@@ -117,18 +116,18 @@ class ProductSearch extends Product {
 			return $dataProvider;
 		}
 
-		$query->andFilterWhere(['LIKE', 'id'                             , $this->id                                            ]);
-		$query->andFilterWhere(['LIKE', 'name'                           , $this->name                                          ]);
-		$query->andFilterWhere(['LIKE', 'label'                          , $this->label                                         ]);
-		$query->andFilterWhere(['LIKE', 'description'                    , $this->description                                   ]);
-		$query->andFilterWhere(['LIKE', 'productSubCategory.id'          , $this->getAttribute('productSubCategory.id'         )]);
-		$query->andFilterWhere(['LIKE', 'productSubCategory.name'        , $this->getAttribute('productSubCategory.name'       )]);
-		$query->andFilterWhere(['LIKE', 'productSubCategory.label'       , $this->getAttribute('productSubCategory.label'      )]);
-		$query->andFilterWhere(['LIKE', 'productSubCategory.description' , $this->getAttribute('productSubCategory.description')]);
-		$query->andFilterWhere(['LIKE', 'productCategory.id'             , $this->getAttribute('productCategory.id'            )]);
-		$query->andFilterWhere(['LIKE', 'productCategory.name'           , $this->getAttribute('productCategory.name'          )]);
-		$query->andFilterWhere(['LIKE', 'productCategory.label'          , $this->getAttribute('productCategory.label'         )]);
-		$query->andFilterWhere(['LIKE', 'productCategory.description'    , $this->getAttribute('productCategory.description'   )]);
+		$query->andFilterWhere(['LIKE', 'id'                             , $this->id                                                             ]);
+		$query->andFilterWhere(['LIKE', 'name'                           , $this->name                                                           ]);
+		$query->andFilterWhere(['LIKE', 'label'                          , $this->label                                                          ]);
+		$query->andFilterWhere(['LIKE', 'description'                    , $this->description                                                    ]);
+		$query->andFilterWhere(['LIKE', 'productSubCategory.id'          , $this->getAttribute('productSubCategory.id'                          )]);
+		$query->andFilterWhere(['LIKE', 'productSubCategory.name'        , $this->getAttribute('productSubCategory.name'                        )]);
+		$query->andFilterWhere(['LIKE', 'productSubCategory.label'       , $this->getAttribute('productSubCategory.label'                       )]);
+		$query->andFilterWhere(['LIKE', 'productSubCategory.description' , $this->getAttribute('productSubCategory.description'                 )]);
+		$query->andFilterWhere(['LIKE', 'productCategory.id'             , $this->getAttribute('productSubCategory.productCategory.id'          )]);
+		$query->andFilterWhere(['LIKE', 'productCategory.name'           , $this->getAttribute('productSubCategory.productCategory.name'        )]);
+		$query->andFilterWhere(['LIKE', 'productCategory.label'          , $this->getAttribute('productSubCategory.productCategory.label'       )]);
+		$query->andFilterWhere(['LIKE', 'productCategory.description'    , $this->getAttribute('productSubCategory.productCategory.description' )]);
 
 		return $dataProvider;
 	}

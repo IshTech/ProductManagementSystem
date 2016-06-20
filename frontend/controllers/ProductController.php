@@ -61,7 +61,7 @@ class ProductController extends BaseController {
 
 			if ($model) {
 				$model->setScenario(Product::SCENARIO_UPDATE);
-				$model->load(Yii::$app->request->post());var_dump($model);die();
+				$model->load(Yii::$app->request->post());
 				if ($this->saveModel($model)) {
 					return $this->redirect(['view', 'id' => $model->id]);
 				}
@@ -141,6 +141,21 @@ class ProductController extends BaseController {
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 		]);
+	}
+
+	public function actionViewCreate() {
+		$model = new Product();
+
+		$enableEditMode = true;
+		$saveButtonAction = self::SAVE_BUTTON_ACTION_CREATE;
+
+		return $this->render('view', [
+			'model'            => $model                ,
+			'mode'             => DetailView::MODE_EDIT ,
+			'enableEditMode'   => $enableEditMode       ,
+			'saveButtonAction' => $saveButtonAction     ,
+		]);
+
 	}
 
 }
