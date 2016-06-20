@@ -25,7 +25,8 @@ abstract class MasterBaseActiveRecord extends StandardBaseActiveRecord {
 				[['name', 'label'], 'string'],
 				[['name'], 'required'],
 				[['lang'], 'string', 'max' => '2'],
-				[['lang'], 'required'],
+	//			[['lang'], 'required'],
+				['lang', 'default', 'value' => 'en', 'on' => [self::SCENARIO_INSERT, ], 'skipOnError' => true, ],
 				[['name'], 'unique', 'on' => [self::SCENARIO_DEFAULT, self::SCENARIO_UPDATE, self::SCENARIO_INSERT, ], 'skipOnError' => true, ],
 			]
 		);
