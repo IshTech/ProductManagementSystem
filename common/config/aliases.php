@@ -1,4 +1,7 @@
 <?php
 return  [
-    '@ishtech/core/db' => '@common/db',
+	'@ishtech/core/behaviors' => '@common/behaviors',
+	'@ishtech/core/controllers' => '@common/controllers',
+	'@ishtech/core/db' => '@common/db',
+	'@ishtech/core/models' => '@common/models',
 ];
