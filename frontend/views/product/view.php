@@ -83,32 +83,67 @@ $this->params['breadcrumbs'][] = $this->title;
 				'label'         => $model->getAttributeLabel('productSubCategory.productCategory.label'),
 				'value'         => (null != $model->productSubCategory && null != $model->productSubCategory->productCategory) ? $model->productSubCategory->productCategory->label : null,
 				'type'          => DetailView::INPUT_SELECT2, 
-                'widgetOptions' => [
-                    'data'    => ArrayHelper::map(ProductCategory::find()->orderBy('label')->asArray()->all(), 'id', 'label'),
-                    'options' => [
+				'widgetOptions' => [
+					'data'    => ArrayHelper::map(ProductCategory::find()->orderBy('label')->asArray()->all(), 'id', 'label'),
+					'options' => [
+						'id' => 'product_category_id',
 						'placeholder' => 'Select ...',
 					],
-                    'pluginOptions' => [
+					'pluginOptions' => [
 						'allowClear' => true,
 						'width'      => '100%',
 					],
-                ],
+				],
 			],
 			[
 				'attribute'     => 'product_sub_category_id',
 				'label'         => $model->getAttributeLabel('productSubCategory.label'),
 				'value'         => (null != $model->productSubCategory) ? $model->productSubCategory->label : null,
-				'type'          => DetailView::INPUT_SELECT2, 
-                'widgetOptions' => [
-                    'data'    => ArrayHelper::map(ProductSubCategory::find()->orderBy('label')->asArray()->all(), 'id', 'label'),
-                    'options' => [
+/*
+				'type'          => DetailView::INPUT_DEPDROP, 
+				'widgetOptions' => [
+	//				'data'    => ArrayHelper::map(ProductSubCategory::find()->orderBy('label')->asArray()->all(), 'id', 'label'),
+					'type'    => \kartik\widgets\DepDrop::TYPE_SELECT2,
+					'options' => [
+						'id' => 'product_sub_category_id',
 						'placeholder' => 'Select ...',
 					],
-                    'pluginOptions' => [
-						'allowClear' => true  ,
-						'width'      => '100%',
+					'select2Options' => [
+						'pluginOptions' => [
+							'allowClear' => true,
+						],
 					],
-                ],
+					'pluginOptions' => [
+						'width'       => '100%',
+						'initialize'  => true,
+						'initDepends' => ['product_category_id'], 
+						'active'      => true,
+						'depends'     => ['product_category_id'],
+						'url'         => Url::to(['/sub-category/for-category'])
+					],
+				],
+*/
+				'type'          => DetailView::INPUT_WIDGET, 
+				'widgetOptions' => [
+					'class' => '\kartik\widgets\DepDrop',
+					'options' => [
+						'id' => 'product_sub_category_id',
+					],
+					'type' => \kartik\widgets\DepDrop::TYPE_SELECT2,
+					'select2Options' => [
+						'pluginOptions' => [
+							'allowClear' => true,
+						],
+					],
+					'pluginOptions' => [
+						'initialize' => true,
+						'initDepends' => ['product_category_id'], 
+						'active' => true,
+						'depends' => ['product_category_id'],
+	//					'placeholder' => '-- Valitse kaupunki --',
+						'url' => Url::to(['/sub-category/for-category', 'selected_sub_category_id' => $model["product_sub_category_id"],])
+					],
+				],
 			],
 			[
 				'attribute'     => 'description'             ,
