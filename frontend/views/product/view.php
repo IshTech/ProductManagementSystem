@@ -4,6 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\detail\DetailView;
+use metalguardian\fotorama\Fotorama;
 use common\models\ProductCategory;
 use common\models\ProductSubCategory;
 
@@ -149,6 +150,23 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute'     => 'description'             ,
 				'format'        => 'ntext'                   ,
 				'type'          => DetailView::INPUT_TEXTAREA,
+			],
+			[
+	//			'attribute'       => 'primaryImage.url',
+				'group'           => false,
+				'label'           => $model->getAttributeLabel('primaryImage.url'),
+				'format'          => 'raw',
+				'value'           => Fotorama::widget([
+					'items'   => $imgArr,
+					'options' => [
+						'hash'            => 'true',
+						'nav'             => 'thumbs',
+	//					'navposition'     => 'top',
+						'allowfullscreen' => 'true',
+						'maxwidth'        => '500',
+	//					'maxheight'       => '12',
+					],
+				]),
 			],
 		],
 	]) ?>
