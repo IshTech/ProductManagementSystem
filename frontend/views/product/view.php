@@ -140,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'initDepends' => ['product_category_id'], 
 						'active' => true,
 						'depends' => ['product_category_id'],
-	//					'placeholder' => '-- Valitse kaupunki --',
+						'placeholder' => 'Select ...',
 						'url' => Url::to(['/sub-category/for-category', 'selected_sub_category_id' => $model["product_sub_category_id"],])
 					],
 				],

@@ -164,7 +164,7 @@ class SubCategoryController extends BaseController {
 			$parents = $_POST['depdrop_parents'];
 			if ($parents != null) {
 				$product_catgegory_id = $parents[0];
-				$out = ProductSubCategory::findByProductCategoryId($product_catgegory_id); 
+				$out = ProductSubCategory::mapForDepDropdown($product_catgegory_id); 
 				// the getSubCatList function will query the database based on the
 				// cat_id and return an array like below:
 				// [

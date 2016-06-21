@@ -59,8 +59,20 @@ class ProductSubCategory extends BaseProductSubCategory {
 		return $this->hasMany(Product::className(), ['product_sub_category_id' => 'id']);
 	}
 
-	public static function findByProductCategoryId($product_catgegory_id) {
-		return self::findByCondition(['product_catgegory_id' => $product_catgegory_id])->all();
+	private static function finderForProductCategoryId($product_catgegory_id, $orderBy = null) {
+		if ($orderBy) {
+			return self::findByCondition(['product_catgegory_id' => $product_catgegory_id])->orderBy($orderBy)->all();
+		} else {
+			return self::findByCondition(['product_catgegory_id' => $product_catgegory_id])->all();
+		}
+	}
+
+	public static function findByProductCategoryId($product_catgegory_id, $orderBy = null) {
+		return self::finderForProductCategoryId($product_catgegory_id, $orderBy)->all();
+	}
+
+	public static function mapForDepDropdown($product_catgegory_id) {
+		return ArrayHelper::map(self::finderForProductCategoryId($product_catgegory_id, 'label')->all(), 'id', 'label');
 	}
 
 }
