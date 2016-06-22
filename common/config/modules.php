@@ -8,4 +8,20 @@ return [
 		// 'downloadAction' => 'gridview/export/download',
 		// 'i18n' => []
 	],
+	'treemanager' =>  [
+		'class' => '\kartik\tree\Module',
+		// other module settings, refer detailed documentation
+		'treeStructure' =>  [
+			'treeAttribute' => 'parent_id',
+			'leftAttribute' => 'parent_id',
+			'rightAttribute' => 'id',
+			'depthAttribute' => 'parent_id',
+		],
+		'dataStructure' =>  [
+			'keyAttribute' => 'id',
+			'nameAttribute' => 'label',
+			'iconAttribute' => 'name',
+			'iconTypeAttribute' => 'is_active',
+		],
+	],
 ];
