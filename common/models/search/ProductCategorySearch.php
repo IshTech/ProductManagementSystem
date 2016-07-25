@@ -61,14 +61,17 @@ class ProductCategorySearch extends ProductCategory {
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
+			'pagination' => [
+				'pageSize' => 10,
+			],
 			'sort' => [
 				'attributes' => [
-					'id'                       ,
-					'name'                     ,
-					'label'                    ,
+					'id'    ,
+					'name'  ,
+					'label' ,
 				],
 				'defaultOrder' => [
-					'label'                    => SORT_ASC  ,
+					'label' => SORT_ASC  ,
 				],
 			],
 		]);
@@ -81,10 +84,10 @@ class ProductCategorySearch extends ProductCategory {
 			return $dataProvider;
 		}
 
-		$query->andFilterWhere(['LIKE', 'id'                             , $this->id                                          ]);
-		$query->andFilterWhere(['LIKE', 'name'                           , $this->name                                        ]);
-		$query->andFilterWhere(['LIKE', 'label'                          , $this->label                                       ]);
-		$query->andFilterWhere(['LIKE', 'description'                    , $this->description                                 ]);
+		$query->andFilterWhere(['LIKE', 'id'          , $this->id          ]);
+		$query->andFilterWhere(['LIKE', 'name'        , $this->name        ]);
+		$query->andFilterWhere(['LIKE', 'label'       , $this->label       ]);
+		$query->andFilterWhere(['LIKE', 'description' , $this->description ]);
 
 		return $dataProvider;
 	}
