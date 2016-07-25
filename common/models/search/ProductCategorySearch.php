@@ -42,7 +42,7 @@ class ProductCategorySearch extends ProductCategory {
 	 */
 	public function attributeLabels() {
 		return ArrayHelper::merge(parent::attributeLabels(), [
-			'label' => Yii::t('app', 'Sub-Category'),
+			'label' => Yii::t('app', 'Category'),
 		]);
 	}
 
