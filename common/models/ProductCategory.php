@@ -68,6 +68,23 @@ class ProductCategory extends BaseProductCategory {
 		return $this->hasOne(ProductCategory::className(), ['id' => 'parent_id']);
 	}
 
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getProductCategoryImages() {
+		return $this->hasMany(ProductCategoryImage::className(), ['product_category_id' => 'id'])->orderBy(['display_order' => SORT_ASC]);
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getPrimaryProductCategoryImage() {
+		return $this->hasOne(ProductCategoryImage::className(), ['product_category_id' => 'id'])
+		->orderBy(['display_order' => SORT_ASC])
+		->limit(1)
+		;
+	}
+
 	public function makeTree() {
 		$out = $this->makeChildTree();
 		$out = $this->makeParentTree($out);

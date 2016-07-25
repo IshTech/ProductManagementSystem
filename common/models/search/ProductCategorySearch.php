@@ -43,6 +43,7 @@ class ProductCategorySearch extends ProductCategory {
 	public function attributeLabels() {
 		return ArrayHelper::merge(parent::attributeLabels(), [
 			'label' => Yii::t('app', 'Category'),
+			'primaryProductCategoryImage.local_url' => Yii::t('app', 'Image'),
 		]);
 	}
 
