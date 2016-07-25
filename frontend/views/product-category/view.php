@@ -5,12 +5,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\detail\DetailView;
 use common\models\ProductCategory;
-use common\models\ProductSubCategory;
 
-$this->title = Yii::t('app', 'Sub-Category');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sub-Categories'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Category');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
+if($model && $model->name) {
+	$this->params['breadcrumbs'][] = $model->name;
+}
 ?>
 <div class="product-view">
 	<?= DetailView::widget([
@@ -76,23 +77,25 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 				'attribute'     => 'label',
-				'label'         => $model->getAttributeLabel('subCategory.label'), // TODO: change label name to Label when in edit mode
+				'rowOptions'    => [
+					'class' => 'kv-view-hidden'
+				],
 			],
 			[
-				'attribute'     => 'product_category_id',
-				'label'         => $model->getAttributeLabel('productCategory.label'),
-				'value'         => (null != $model->productCategory) ? $model->productCategory->label : null,
+				'attribute'     => 'parent_id',
+				'label'         => $model->getAttributeLabel('parentProductCategory'),
+				'value'         => (null != $model->parentProductCategory) ? $model->parentProductCategory->label : null,
 				'type'          => DetailView::INPUT_SELECT2, 
-                'widgetOptions' => [
-                    'data'    => ArrayHelper::map(ProductCategory::find()->orderBy('label')->asArray()->all(), 'id', 'label'),
-                    'options' => [
+				'widgetOptions' => [
+					'data'    => ProductCategory::asIdLabelMap($model->id),
+					'options' => [
 						'placeholder' => 'Select ...',
 					],
-                    'pluginOptions' => [
+					'pluginOptions' => [
 						'allowClear' => true,
 						'width'      => '100%',
 					],
-                ],
+				],
 			],
 			[
 				'attribute'     => 'description'             ,

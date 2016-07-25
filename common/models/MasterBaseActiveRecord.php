@@ -43,5 +43,13 @@ abstract class MasterBaseActiveRecord extends StandardBaseActiveRecord {
 		]);
 	}
 
+	public static function asIdLabelMap($id = null) {
+		$arr = ArrayHelper::map(self::find()->orderBy('label')->asArray()->all(), 'id', 'label');
+		if($id) {
+			unset($arr[$id]);
+		}
+		return $arr;
+	}
+
 }
 ?>
