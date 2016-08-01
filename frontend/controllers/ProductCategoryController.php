@@ -177,6 +177,14 @@ class ProductCategoryController extends BaseController {
 		}
 		echo Json::encode(['output'=>'', 'selected'=>'']);
 	}
-	 
+
+	/**
+	 * ProductTree rendering.
+	 * @return mixed
+	 */
+	public function actionProductTree() {
+		return $this->render('index2');
+	}
+
 }
 ?>

@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\tree\TreeView;
-use common\models\ProductCategory;
+use common\models\ProductTree;
 
 $this->title = Yii::t('app', 'Categories');
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,13 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?= TreeView::widget([
 		// single query fetch to render the tree
 		// use the Product model you have in the previous step
-		'query'          => ProductCategory::find(),
+		'query'          => ProductTree::find()->addOrderBy('root, lft'), 
 		'headingOptions' => [
-			'label' => 'Categories'
+			'label' => 'Categories',
+		],
+		'rootOptions'    => [
+			'label' => '',
 		],
 		'fontAwesome'    => false, // optional
 		'isAdmin'        => false, // optional (toggle to enable admin mode)
-	//	'displayValue'   => 1,     // initial display value
+		'displayValue'   => 0,     // initial display value
 		'softDelete'     => true,  // defaults to true
 		'cacheSettings'  => [
 			'enableCache' => true, // defaults to true
