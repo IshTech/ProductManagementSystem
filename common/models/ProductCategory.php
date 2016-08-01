@@ -44,6 +44,7 @@ class ProductCategory extends BaseProductCategory {
 	public function attributeLabels() {
 		return ArrayHelper::merge(parent::attributeLabels(), [
 			'parentProductCategory' => Yii::t('app', 'Parent Category'),
+			'productCategoryImages' => Yii::t('app', 'Image(s)'),
 		]);
 	}
 
@@ -83,6 +84,14 @@ class ProductCategory extends BaseProductCategory {
 		->orderBy(['display_order' => SORT_ASC])
 		->limit(1)
 		;
+	}
+
+	public function asArrayProductCategoryImages() {
+		$imgArr = [];
+		foreach($this->productCategoryImages AS $img){
+			$imgArr[]['img'] = $img->local_url;
+		}
+		return $imgArr;
 	}
 
 	public function makeTree() {

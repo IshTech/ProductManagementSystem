@@ -71,10 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format'     => 'html',
 				'value'      => function ($model, $key, $index, $column) {
 					if(null != $model->primaryProductCategoryImage && null != $model->primaryProductCategoryImage->local_url) {
-	//					return $model->primaryProductCategoryImage->local_url;
-						return Html::img($model->primaryProductCategoryImage->local_url, ['width' => 80, 'height' => 60, ]);
-	//					return Html::img('www.google.com/test1.jpg', ['width' => 80, 'height' => 60, ]);
-	//					return '<img src="' . $model->primaryProductCategoryImage->local_url . '" ' . ' width="80" height="60" ' . '/>';
+						return Html::img('@web' . '/images/product-category/' . $model->primaryProductCategoryImage->local_url, ['width' => 80, 'height' => 60, ]);
 					} else {
 						return '';
 					}

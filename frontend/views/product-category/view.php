@@ -4,6 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\detail\DetailView;
+use metalguardian\fotorama\Fotorama;
 use common\models\ProductCategory;
 
 $this->title = Yii::t('app', 'Category');
@@ -12,6 +13,15 @@ $this->params['breadcrumbs'][] = $this->title;
 if($model && $model->name) {
 	$this->params['breadcrumbs'][] = $model->name;
 }
+
+	//images
+	$imgArr = [];
+	if($model) {
+		foreach($model->productCategoryImages AS $img){
+			$imgArr[]['img'] = Url::to('@web' . '/images/product-category/' . $img->local_url, true);
+		}
+	}
+//	var_dump($imgArr);die();
 ?>
 <div class="product-view">
 	<?= DetailView::widget([
@@ -56,30 +66,54 @@ if($model && $model->name) {
 		],
 		'attributes' => [
 			[
-				'attribute'     => 'id'                     ,
-				'type'          => DetailView::INPUT_HIDDEN ,
-	//			'visible'       => false,
-	//			'rowOptions'    => [
+				'attribute'  => 'id'                     ,
+				'type'       => DetailView::INPUT_HIDDEN ,
+	//			'visible'    => false,
+	//			'rowOptions' => [
 	//				'class' => 'kv-edit-hidden kv-view-hidden'
 	//			],
-				'labelColOptions'    => [
-					'class' => 'kv-view-hidden'
+				'labelColOptions' => [
+					'class' => 'kv-view-hidden',
+					'style' => 'float: right',
 				],
-				'valueColOptions'    => [
-					'class' => 'kv-view-hidden'
-				],
-			],
-			[
-				'attribute'     => 'name',
-				'rowOptions'    => [
-					'class' => 'kv-view-hidden'
+				'valueColOptions' => [
+					'class' => 'kv-view-hidden',
+					'style' => 'float: right',
 				],
 			],
 			[
-				'attribute'     => 'label',
-				'rowOptions'    => [
-					'class' => 'kv-view-hidden'
+	//			'attribute'   => 'primaryProductCategoryImage',
+				'displayOnly' => true,
+				'format'      => 'raw',
+	//			'group'       => true,
+	//			'groupOptions' => [
+	//				'style' => 'float: left; position: relative; left: 50%;',
+	//			],
+	//			'label'       => Fotorama::widget([
+				'group'       => false,
+				'label'       => $model->getAttributeLabel('productCategoryImages'),
+				'value'       => Fotorama::widget([
+					'items'   => $imgArr,
+					'options' => [
+						'hash' => 'true',
+						'nav' => 'thumbs',
+					//	'navposition' => 'top',
+						'allowfullscreen' => 'true',
+						'maxwidth' => '500',
+						'maxheight' => '375',
+					],
+					
+				]),
+			],
+			[
+				'attribute'  => 'name',
+				'rowOptions' => [
+					'class' => 'kv-view-hidden',
 				],
+			],
+			[
+				'attribute'  => 'label',
+				'label'      => '<span class="kv-edit-hidden" style="float: right">' . $model->getAttributeLabel('category') . '</span><span class="kv-view-hidden" style="float: right">' . $model->getAttributeLabel('label') . '</span>',
 			],
 			[
 				'attribute'     => 'parent_id',
@@ -98,9 +132,9 @@ if($model && $model->name) {
 				],
 			],
 			[
-				'attribute'     => 'description'             ,
-				'format'        => 'ntext'                   ,
-				'type'          => DetailView::INPUT_TEXTAREA,
+				'attribute'  => 'description'             ,
+				'format'     => 'ntext'                   ,
+				'type'       => DetailView::INPUT_TEXTAREA,
 			],
 		],
 	]) ?>
