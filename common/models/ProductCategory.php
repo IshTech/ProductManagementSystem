@@ -132,7 +132,7 @@ class ProductCategory extends BaseProductCategory {
 
 	public function makeTreeUL() {
 		$tree = $this->makeTree();
-		$out = "<ul>" . "\n";
+		$out = "<ul" . " class=\"tree\"" . ">" . "\n";
 		$out = $out . $this->makeTreeLI($tree, $this->id);
 
 		$out = $out . "\n" . "</ul>";

@@ -85,3 +85,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	]); ?>
 
 </div>
+<!--
+<script type="text/javascript">
+$(document).ready(function () {
+	$('ul.tree li:last-child').addClass('last');
+});
+</script>
+-->
