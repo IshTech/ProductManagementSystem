@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use kartik\detail\DetailView;
 use ishtech\core\controllers\BaseController;
@@ -184,6 +185,56 @@ class ProductCategoryController extends BaseController {
 	 */
 	public function actionCategoryTree() {
 		return $this->render('category-tree');
+	}
+
+	/**
+	 * ProductCategory as tree rendering.
+	 * @return mixed
+	 */
+	public function actionProductCategoryTree() {
+		$productCategories = ProductCategory::find()->all();
+		$properties = [
+			'common\models\ProductCategory' => [
+				'id',
+				'name' => 'label',
+				'parent_id' => function ($productCategory) {
+					return (null == $productCategory->parent_id) ? 0 : $productCategory->parent_id;
+				},
+				'children' => 'childProductCategories',
+			],
+		];
+		$arr = ArrayHelper::toArray($productCategories, $properties, true);
+		$data = Json::encode($arr);
+		return $this->render('product-category-tree', ['data' => $data]);
+	}
+
+	/**
+	 * ProductCategory as tree rendering.
+	 * @return mixed
+	 */
+	public function actionProductCategoryTreeJson() {
+		$productCategories = ProductCategory::find()->all();
+	//	var_dump($productCategories);
+	//	var_dump($productCategories[0]->extraFields());
+	//	var_dump($productCategories[3]->toArray(['id', 'parent_id'], ['parent_id', 'name', 'children'], true));
+		$properties = [
+			'common\models\ProductCategory' => [
+				'id',
+				'name' => 'label',
+				'parent_id' => function ($productCategory) {
+					return (null == $productCategory->parent_id) ? 0 : $productCategory->parent_id;
+				},
+		//		'children' => function($productCategory) {
+		//			return empty($productCategory->childProductCategories) : [] ? $productCategory->childProductCategories;
+		//		},
+				'children' => 'childProductCategories',
+			],
+		];
+		$arr = ArrayHelper::toArray($productCategories, $properties, true);
+	//	var_dump($arr);
+		$json = Json::encode($arr);
+	//	Yii::$app->response->format = 'json';
+		return $json;
 	}
 
 }
