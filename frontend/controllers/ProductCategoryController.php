@@ -182,8 +182,8 @@ class ProductCategoryController extends BaseController {
 	 * ProductTree rendering.
 	 * @return mixed
 	 */
-	public function actionProductTree() {
-		return $this->render('index2');
+	public function actionCategoryTree() {
+		return $this->render('category-tree');
 	}
 
 }
