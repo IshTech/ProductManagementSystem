@@ -38,20 +38,6 @@ function searchTree(text) {
 $this->title = Yii::t('app', 'Categories');
 $this->params['breadcrumbs'][] = $this->title;
 
-/**
- * TODO: addtional features commented out, can be sold to customer
- * TODO: to reset / clear search filters
- *
- */
-?>
-<style type="text/css">
-/*
-	.jstree li > a > .jstree-icon {  display:none !important; } 
-*//*
-	li.jstree-leaf > a .jstree-icon { display: none; }
-	li.jstree-leaf > a .jstree-icon { display: none; }
-*/
-</style>
 <div class="col-sm-3">
 	<input type="text" class="form-control input-sm" placeholder="Type to search..." id="searchTreeText" name="searchTreeText"/>
 </div>
