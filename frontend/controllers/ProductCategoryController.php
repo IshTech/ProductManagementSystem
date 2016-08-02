@@ -165,7 +165,7 @@ class ProductCategoryController extends BaseController {
 			$parents = $_POST['depdrop_parents'];
 			if ($parents != null) {
 				$product_catgegory_id = $parents[0];
-				$out = ProductCategory::mapForDepDropdown($product_catgegory_id); 
+				$out = ProductCategory::mapForDepDropdown($product_catgegory_id);
 				// the getSubCatList function will query the database based on the
 				// cat_id and return an array like below:
 				// [
@@ -192,49 +192,23 @@ class ProductCategoryController extends BaseController {
 	 * @return mixed
 	 */
 	public function actionProductCategoryTree() {
-		$productCategories = ProductCategory::find()->all();
+		$productCategories = ProductCategory::findAll(['parent_id' => null]);
 		$properties = [
 			'common\models\ProductCategory' => [
 				'id',
-				'name' => 'label',
+				'text' => 'label',
 				'parent_id' => function ($productCategory) {
 					return (null == $productCategory->parent_id) ? 0 : $productCategory->parent_id;
 				},
 				'children' => 'childProductCategories',
+				'icon' => function () {
+					return "fa fa-tags";
+				},
 			],
 		];
 		$arr = ArrayHelper::toArray($productCategories, $properties, true);
 		$data = Json::encode($arr);
 		return $this->render('product-category-tree', ['data' => $data]);
-	}
-
-	/**
-	 * ProductCategory as tree rendering.
-	 * @return mixed
-	 */
-	public function actionProductCategoryTreeJson() {
-		$productCategories = ProductCategory::find()->all();
-	//	var_dump($productCategories);
-	//	var_dump($productCategories[0]->extraFields());
-	//	var_dump($productCategories[3]->toArray(['id', 'parent_id'], ['parent_id', 'name', 'children'], true));
-		$properties = [
-			'common\models\ProductCategory' => [
-				'id',
-				'name' => 'label',
-				'parent_id' => function ($productCategory) {
-					return (null == $productCategory->parent_id) ? 0 : $productCategory->parent_id;
-				},
-		//		'children' => function($productCategory) {
-		//			return empty($productCategory->childProductCategories) : [] ? $productCategory->childProductCategories;
-		//		},
-				'children' => 'childProductCategories',
-			],
-		];
-		$arr = ArrayHelper::toArray($productCategories, $properties, true);
-	//	var_dump($arr);
-		$json = Json::encode($arr);
-	//	Yii::$app->response->format = 'json';
-		return $json;
 	}
 
 }
