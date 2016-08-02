@@ -22,10 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
 		'headingOptions' => [
 			'label' => 'Categories',
 		],
-		'rootOptions'    => [
-			'label' => '',
-		],
-		'fontAwesome'    => false, // optional
+	//	'rootOptions'    => [
+	//		'label' => '',
+	//	],
+		'fontAwesome'    => true, // optional
+		'defaultChildNodeIcon' => '<i class="fa fa-tag"></i>', //<i class="glyphicon glyphicon-tag"></i>
+		'defaultParentNodeIcon' => '<i class="fa fa-tags"></i>', //<i class="glyphicon glyphicon-tags"></i>
+		'defaultParentNodeOpenIcon' => '',
 		'isAdmin'        => false, // optional (toggle to enable admin mode)
 		'displayValue'   => 0,     // initial display value
 		'softDelete'     => true,  // defaults to true
