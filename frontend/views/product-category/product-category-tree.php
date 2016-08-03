@@ -38,6 +38,7 @@ function searchTree(text) {
 $this->title = Yii::t('app', 'Categories');
 $this->params['breadcrumbs'][] = $this->title;
 
+?>
 <div class="col-sm-3">
 	<input type="text" class="form-control input-sm" placeholder="Type to search..." id="searchTreeText" name="searchTreeText"/>
 </div>
